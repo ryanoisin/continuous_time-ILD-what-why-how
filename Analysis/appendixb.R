@@ -56,7 +56,7 @@ model <- ctModel(n.manifest = 2, n.latent= 2, Tpoints = 286,
                  startValues = NULL) 
 
 # Fit the model to the data using carefulFit to get initial values
-fit <- ctFit(data= datawide, ctmodelobj = model, objective = "Kalman",
+fit <- ctFit(dat= datawide, ctmodelobj = model, objective = "Kalman",
              stationary = c("T0VAR", "T0MEANS"), 
             iterationSummary = T, carefulFit = T, showInits = F, asymptotes = F,
              meanIntervals = F, 
