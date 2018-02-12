@@ -32,7 +32,7 @@ data$time=time
 # Create an ID variable
 data$id=rep(1,dim(data)[1])
 
-# Rename pat_agitate = Y1, and event_import= Y2 for use with ctsem
+# Rename mood_down = Y1, and phy_tired= Y2 for use with ctsem
 colnames(data)=c("Y1","Y2","time","id")
 # Get data in wide format for ctsem
 datawide<-ctLongToWide(datalong=data,id="id",time="time",manifestNames=c("Y1","Y2"))
