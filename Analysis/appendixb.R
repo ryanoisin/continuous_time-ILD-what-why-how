@@ -3,11 +3,10 @@
 library(ctsem)
 
 # Data is available from https://osf.io/c6xt4/download #
-# Folder is ESMdata.zip
-setwd("./ESMdata")
+# Folder is ESMdata
 
 #Load Data#
-rawdata<-read.csv("ESMdata.csv",header=TRUE, stringsAsFactors = FALSE)
+rawdata<-read.csv("./ESMdata/ESMdata.csv",header=TRUE, stringsAsFactors = FALSE)
 
 #Select only measruements which take place in the control and initial (no medication reduciton) phase
 rawdata<-subset(rawdata,rawdata$phase==1|rawdata$phase==2)
@@ -32,7 +31,7 @@ data$time=time
 # Create an ID variable
 data$id=rep(1,dim(data)[1])
 
-# Rename mood_down = Y1, and phy_tired= Y2 for use with ctsem
+# Rename pat_agitate = Y1, and event_import= Y2 for use with ctsem
 colnames(data)=c("Y1","Y2","time","id")
 # Get data in wide format for ctsem
 datawide<-ctLongToWide(datalong=data,id="id",time="time",manifestNames=c("Y1","Y2"))
@@ -56,7 +55,7 @@ model <- ctModel(n.manifest = 2, n.latent= 2, Tpoints = 286,
                  startValues = NULL) 
 
 # Fit the model to the data using carefulFit to get initial values
-fit <- ctFit(dat= datawide, ctmodelobj = model, objective = "Kalman",
+fit <- ctFit(dat = datawide, ctmodelobj = model, objective = "Kalman",
              stationary = c("T0VAR", "T0MEANS"), 
             iterationSummary = T, carefulFit = T, showInits = F, asymptotes = F,
              meanIntervals = F, 
@@ -65,5 +64,4 @@ fit <- ctFit(dat= datawide, ctmodelobj = model, objective = "Kalman",
 
 results<-summary(fit)
 
-setwd("C:/Users/F111848/Dropbox/CT Book chapter/Empirical Example/Analysis")
 save(results,file="results.RData")
